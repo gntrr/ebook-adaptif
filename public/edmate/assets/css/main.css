@@ -9731,7 +9731,8 @@ button:focus {
 }
 
 .auth-right__logo {
-    margin-bottom: clamp(2rem, -1.651rem + 7.607vw, 5rem);
+    margin-bottom: 1.5rem;
+    max-width: 260px;
 }
 
 .divider::before {

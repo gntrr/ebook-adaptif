@@ -8,12 +8,12 @@
 
     <section class="auth d-flex">
         <div class="auth-left bg-main-50 flex-center p-24">
-            <img src="{{ asset('edmate/assets/images/thumbs/auth-img1.png') }}" alt="">
+            <img src="{{ asset('images/login-assets.png') }}" alt="" style="max-width: 572px">
         </div>
         <div class="auth-right py-40 px-24 flex-center flex-column">
             <div class="auth-right__inner mx-auto w-100">
                 <a href="index.html" class="auth-right__logo">
-                    <img src="{{ asset('edmate/assets/images/logo/logo.png') }}" alt="">
+                    <img src="{{ asset('images/logo-black.png') }}" alt="">
                 </a>
                 <h2 class="mb-8">Welcome to Back! &#128075;</h2>
                 <p class="text-gray-600 text-15 mb-32">Please sign in to your account and start the adventure</p>
