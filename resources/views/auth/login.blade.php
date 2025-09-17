@@ -13,9 +13,9 @@
         <div class="auth-right py-40 px-24 flex-center flex-column">
             <div class="auth-right__inner mx-auto w-100">
                 <a href="index.html" class="auth-right__logo">
-                    <img src="{{ asset('images/logo-black.png') }}" alt="">
+                    <img src="{{ asset('images/logo-black.png') }}" alt="" style="max-width: 160px">
                 </a>
-                <h2 class="mb-8">Welcome to Back! &#128075;</h2>
+                <h2 class="mb-8">Welcome to Back! <img src="{{ asset('edmate/assets/images/icons/wave-hand.png') }}" alt=""></h2>
                 <p class="text-gray-600 text-15 mb-32">Please sign in to your account and start the adventure</p>
 
                 <form method="POST" action="{{ route('login') }}">

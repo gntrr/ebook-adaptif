@@ -38,28 +38,36 @@
         <link rel="stylesheet" href="{{ asset('edmate/assets/css/main.css') }}">
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <body>
+        <!--==================== Preloader Start ====================-->
+        <div class="preloader">
+            <div class="loader"></div>
+        </div>
+        <!--==================== Preloader End ====================-->
+
+        <!--==================== Sidebar Overlay End ====================-->
+        <div class="side-overlay"></div>
+        <!--==================== Sidebar Overlay End ====================-->
+        
+        <!-- ============================ Sidebar Start ============================ -->
+        @include('layouts.sidebar')
+        <!-- ============================ Sidebar End  ============================ -->
 
             <!-- Page Heading -->
-            @isset($header)
+            {{-- @isset($header)
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
-            @endisset
+            @endisset --}}
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
+        <!-- Main Content -->
+        {{ $slot }}
     </body>
-
+        
     <!--==============================
     All JS File From EdMate Template
     ============================== -->
@@ -90,5 +98,8 @@
     <!-- jvectormap world Js -->
     <script src="{{ asset('edmate/assets/js/jquery-jvectormap-world-mill-en.js') }}"></script>
     <!-- main js --> <script src="{{ asset('edmate/assets/js/main.js') }}"></script>
+
+    <!-- Page Specific Scripts -->
+    @stack('scripts')
 
 </html>
