@@ -44,13 +44,18 @@ class DashboardController extends Controller
         $start    = $end->subDays(max(1, $days));
 
         // ---------- 1) Metrik umum ----------
-        $totalUsers  = User::count();
-        $totalAdmins = User::where('is_admin', true)->count();
+        $totalUsers    = User::count();
+        $totalAdmins   = User::where('is_admin', true)->count();
+        $totalMateri   = Materi::count();
+        $totalEvaluasi = Evaluasi::count();
 
         $attemptsQ = HasilEvaluasi::query()
             ->whereBetween('created_at', [$start, $end]);
 
         $totalAttempts = (clone $attemptsQ)->count();
+
+        $avgScore  = (clone $attemptsQ)->avg('skor');
+        $avgScore  = $avgScore ? round((float) $avgScore, 2) : 0.00;
 
         $passCount = (clone $attemptsQ)->where('lulus', true)->count();
         $passRate  = $totalAttempts ? round(($passCount / $totalAttempts) * 100, 2) : 0.00;
@@ -134,10 +139,13 @@ class DashboardController extends Controller
         return view('admin.dashboard', [
             'filter'          => ['start' => $start->toDateTimeString(), 'end' => $end->toDateTimeString()],
             'metrics'         => [
-                'total_users'   => $totalUsers,
-                'total_admins'  => $totalAdmins,
-                'total_attempts'=> $totalAttempts,
-                'pass_rate'     => $passRate,
+                'total_users'     => $totalUsers,
+                'total_admins'    => $totalAdmins,
+                'total_materi'    => $totalMateri,
+                'total_evaluasi'  => $totalEvaluasi,
+                'avg_skor'        => $avgScore,
+                'total_attempts'  => $totalAttempts,
+                'pass_rate'       => $passRate,
             ],
             'rekapPerBab'     => $rekapPerBab,
             'topPerformers'   => $topPerformers,
