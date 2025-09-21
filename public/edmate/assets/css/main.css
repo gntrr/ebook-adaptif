@@ -308,6 +308,18 @@
     color: hsl(var(--white)) !important;
 }
 
+.btn-outline-danger {
+    background-color: transparent !important;
+    border-color: var(--danger-600) !important;
+    color: var(--danger-600) !important;
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--danger-600) !important;
+    border-color: var(--danger-600) !important;
+    color: hsl(var(--white)) !important;
+}
+
 /* ================================= Button Css End =========================== */
 /* ================================= Form Css Start =========================== */
 /* input Start */

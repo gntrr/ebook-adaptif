@@ -53,7 +53,7 @@
                             </div>
                             <div class="col-12 d-flex gap-12">
                                 <button type="submit" class="btn btn-main rounded-pill">Terapkan Filter</button>
-                                <a href="{{ route('admin.materi.index') }}" class="btn btn-outline-secondary rounded-pill">Reset</a>
+                                <a href="{{ route('admin.materi.index') }}" class="btn btn-outline-gray rounded-pill">Reset</a>
                             </div>
                         </form>
                     </div>
@@ -90,7 +90,7 @@
                                             <td>{{ $materi->updated_at?->format('d M Y H:i') }}</td>
                                             <td class="text-center">
                                                 <div class="d-flex justify-content-center gap-8">
-                                                    <a href="{{ route('admin.materi.edit', $materi) }}" class="btn btn-sm btn-outline-primary rounded-pill">Edit</a>
+                                                    <a href="{{ route('admin.materi.edit', $materi) }}" class="btn btn-sm btn-outline-main rounded-pill">Edit</a>
                                                     <form action="{{ route('admin.materi.destroy', $materi) }}" method="POST" onsubmit="return confirm('Hapus materi ini?')">
                                                         @csrf
                                                         @method('DELETE')
@@ -100,7 +100,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr>
+                                        <tr data-empty="1">
                                             <td colspan="7" class="text-center text-gray-400 py-24">Belum ada materi yang sesuai filter.</td>
                                         </tr>
                                     @endforelse
@@ -121,7 +121,14 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 if (window.jQuery && $.fn.DataTable) {
-                    $('#materi-table').DataTable({
+                    const $tbl = $('#materi-table');
+                    const bodyRows = $tbl.find('tbody tr');
+                    const nonEmptyRows = bodyRows.filter(function(){ return !this.hasAttribute('data-empty'); });
+                    if(nonEmptyRows.length === 0){
+                        // Jangan init DataTables kalau hanya ada baris placeholder dengan colspan
+                        return;
+                    }
+                    $tbl.DataTable({
                         paging: false,
                         info: false,
                         searching: false,

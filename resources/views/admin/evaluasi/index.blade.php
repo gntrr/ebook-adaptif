@@ -51,7 +51,7 @@
                             </div>
                             <div class="col-md-3 d-flex gap-10">
                                 <button type="submit" class="btn btn-main rounded-pill">Terapkan Filter</button>
-                                <a href="{{ route('admin.evaluasi.index') }}" class="btn btn-outline-secondary rounded-pill">Reset</a>
+                                <a href="{{ route('admin.evaluasi.index') }}" class="btn btn-outline-gray rounded-pill">Reset</a>
                             </div>
                         </form>
                     </div>
@@ -91,7 +91,7 @@
                                                         <span class="fw-semibold">{{ $evaluation->materi->judul ?? '-' }}</span>
                                                         <div class="text-13 text-gray-400">{{ $evaluation->pertanyaan }}</div>
                                                     </td>
-                                                    <td>Bab {{ $evaluation->materi->bab ?? '-' }} • Step {{ $evaluation->materi->step ?? '-' }}</td>
+                                                    <td>Bab {{ $evaluation->materi->bab ?? '-' }} ï¿½ Step {{ $evaluation->materi->step ?? '-' }}</td>
                                                     <td>{{ $evaluation->materi->track ?? 'Default' }}</td>
                                                     <td>
                                                         <div class="d-flex flex-wrap gap-6">
@@ -110,7 +110,7 @@
                                                     <td>{{ $evaluation->updated_at?->format('d M Y H:i') ?? 'baru' }}</td>
                                                     <td class="text-center">
                                                         <div class="d-flex justify-content-center gap-6">
-                                                            <a href="{{ route('admin.evaluasi.edit', $evaluation) }}" class="btn btn-sm btn-outline-primary rounded-pill">Edit</a>
+                                                            <a href="{{ route('admin.evaluasi.edit', $evaluation) }}" class="btn btn-sm btn-outline-main rounded-pill">Edit</a>
                                                             <form action="{{ route('admin.evaluasi.destroy', $evaluation) }}" method="POST" onsubmit="return confirm('Hapus soal ini?')">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -139,7 +139,7 @@
                                     @php($previewOptions = $previewOptions ?? [])
                                     <div class="mb-16">
                                         <h6 class="fw-semibold mb-4">{{ $previewEvaluation->materi->judul ?? '-' }}</h6>
-                                        <p class="text-gray-400 mb-0">Bab {{ $previewEvaluation->materi->bab ?? '-' }} • Step {{ $previewEvaluation->materi->step ?? '-' }} • {{ $previewEvaluation->materi->track ?? 'Default' }}</p>
+                                        <p class="text-gray-400 mb-0">Bab {{ $previewEvaluation->materi->bab ?? '-' }} ï¿½ Step {{ $previewEvaluation->materi->step ?? '-' }} ï¿½ {{ $previewEvaluation->materi->track ?? 'Default' }}</p>
                                     </div>
                                     <p class="fw-semibold mb-12">{{ $previewEvaluation->pertanyaan }}</p>
                                     <div class="row g-3">
@@ -176,22 +176,7 @@
         </div>
     </div>
 
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                if (window.jQuery && $.fn.DataTable) {
-                    $('#evaluasi-table').DataTable({
-                        paging: false,
-                        searching: false,
-                        info: false,
-                        order: [[0, 'desc']],
-                        columnDefs: [
-                            { orderable: false, targets: [4,5,7] }
-                        ]
-                    });
-                }
-            });
-        </script>
-    @endpush
+    
 </x-app-layout>
+
 

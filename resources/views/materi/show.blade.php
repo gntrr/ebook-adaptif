@@ -6,10 +6,10 @@
             <div class="container-fluid">
                 <div class="d-flex flex-wrap justify-content-between align-items-center gap-16 mb-24">
                     <div>
-                        <h1 class="h3 mb-8">Bab {{ $bab }} • Step {{ $step }}</h1>
+                        <h1 class="h3 mb-8">Bab {{ $bab }} ï¿½ Step {{ $step }}</h1>
                         <p class="text-gray-400 mb-0">Track: {{ $track ? 'Track ' . $track : 'Jalur umum' }}</p>
                     </div>
-                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary rounded-pill">Kembali ke Dashboard</a>
+                    <a href="{{ route('dashboard') }}" class="btn btn-outline-gray rounded-pill">Kembali ke Dashboard</a>
                 </div>
 
                 @if (session('status'))

@@ -22,7 +22,7 @@
                             </div>
                             <div class="col-md-3">
                                 <button type="submit" class="btn btn-main rounded-pill">Cari</button>
-                                <a href="{{ route('admin.klasifikasi.index') }}" class="btn btn-outline-secondary rounded-pill ms-2">Reset</a>
+                                <a href="{{ route('admin.klasifikasi.index') }}" class="btn btn-outline-gray rounded-pill ms-2">Reset</a>
                             </div>
                         </form>
                     </div>
@@ -103,7 +103,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr>
+                                        <tr data-empty="1">
                                             <td colspan="7" class="text-center text-gray-400 py-24">Tidak ada user ditemukan.</td>
                                         </tr>
                                     @endforelse
@@ -124,7 +124,13 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 if (window.jQuery && $.fn.DataTable) {
-                    $('#klasifikasi-table').DataTable({
+                    const $tbl = $('#klasifikasi-table');
+                    const bodyRows = $tbl.find('tbody tr');
+                    const nonEmptyRows = bodyRows.filter(function(){ return !this.hasAttribute('data-empty'); });
+                    if(nonEmptyRows.length === 0){
+                        return;
+                    }
+                    $tbl.DataTable({
                         paging: false,
                         info: false,
                         searching: false,

@@ -14,25 +14,25 @@
                 @include('admin.partials.flash')
 
                 <div class="row gy-4">
-                    @forelse ( as )
+                    @forelse ($trees as $tree)
                         <div class="col-xl-6">
                             <div class="card h-100">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-start mb-16">
                                         <div>
-                                            <h5 class="mb-4">Bab {{ ['bab'] }}</h5>
-                                            <p class="text-gray-400 mb-0">{{ ['summary'] }}</p>
+                                            <h5 class="mb-4">Bab {{ $tree['bab'] }}</h5>
+                                            <p class="text-gray-400 mb-0">{{ $tree['summary'] }}</p>
                                         </div>
-                                        <span class="badge bg-main-100 text-main-600">{{ ['track'] ? 'Track '.['track'] : 'Jalur utama' }}</span>
+                                        <span class="badge bg-main-100 text-main-600">{{ $tree['track'] ? 'Track '.$tree['track'] : 'Jalur utama' }}</span>
                                     </div>
 
                                     <div class="ps-20 border-start border-main-100">
-                                        @foreach (['nodes'] as )
+                                        @foreach ($tree['nodes'] as $node)
                                             <div class="mb-16 position-relative">
                                                 <span class="position-absolute top-0 start-0 translate-middle-y translate-middle-x w-12 h-12 rounded-circle bg-main-600"></span>
                                                 <div class="ms-3">
-                                                    <span class="badge bg-main-100 text-main-600 mb-4">{{ ['label'] }}</span>
-                                                    <p class="text-gray-400 mb-0">{{ ['action'] }}</p>
+                                                    <span class="badge bg-main-100 text-main-600 mb-4">{{ $node['label'] }}</span>
+                                                    <p class="text-gray-400 mb-0">{{ $node['action'] }}</p>
                                                 </div>
                                             </div>
                                         @endforeach
@@ -42,7 +42,7 @@
                                         <i class="ph ph-note"></i>
                                         <div>
                                             <span class="fw-semibold d-block mb-2">Catatan</span>
-                                            <p class="text-gray-400 mb-0">{{ ['notes'] }}</p>
+                                            <p class="text-gray-400 mb-0">{{ $tree['notes'] }}</p>
                                         </div>
                                     </div>
                                 </div>

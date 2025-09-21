@@ -10,7 +10,7 @@
                         <p class="text-gray-400 mb-0">Kelola threshold skor dan aturan loncatan step berbasis kebijakan pembelajaran.</p>
                     </div>
                     <div class="d-flex gap-8">
-                        <button type="button" class="btn btn-outline-secondary rounded-pill">Reset</button>
+                        <button type="button" class="btn btn-outline-gray rounded-pill">Reset</button>
                         <button type="button" class="btn btn-main rounded-pill">Simpan Draft</button>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                                         <label class="form-label text-13 text-uppercase text-gray-400">Kategori B</label>
                                         <div class="input-group">
                                             <input type="number" class="form-control bg-main-50 border-0" value="60" min="0" max="100">
-                                            <span class="input-group-text bg-main-600 text-white border-0">60–89</span>
+                                            <span class="input-group-text bg-main-600 text-white border-0">60ï¿½89</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">

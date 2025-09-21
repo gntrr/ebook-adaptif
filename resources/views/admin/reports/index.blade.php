@@ -10,13 +10,13 @@
                         <p class="text-gray-400 mb-0">Analisis performa evaluasi, tingkat ketuntasan, dan ekspor data CSV.</p>
                     </div>
                     <div class="d-flex gap-8 flex-wrap">
-                        <a href="{{ route('admin.reports.export', array_merge(request()->all(), ['type' => 'per_bab'])) }}" class="btn btn-outline-primary rounded-pill">
+                        <a href="{{ route('admin.reports.export', array_merge(request()->all(), ['type' => 'per_bab'])) }}" class="btn btn-outline-main rounded-pill">
                             <i class="ph ph-download-simple me-2"></i>Ekspor Per Bab
                         </a>
-                        <a href="{{ route('admin.reports.export', array_merge(request()->all(), ['type' => 'per_user'])) }}" class="btn btn-outline-primary rounded-pill">
+                        <a href="{{ route('admin.reports.export', array_merge(request()->all(), ['type' => 'per_user'])) }}" class="btn btn-outline-main rounded-pill">
                             <i class="ph ph-download-simple me-2"></i>Ekspor Per User
                         </a>
-                        <a href="{{ route('admin.reports.export', array_merge(request()->all(), ['type' => 'detail'])) }}" class="btn btn-outline-primary rounded-pill">
+                        <a href="{{ route('admin.reports.export', array_merge(request()->all(), ['type' => 'detail'])) }}" class="btn btn-outline-main rounded-pill">
                             <i class="ph ph-download-simple me-2"></i>Ekspor Detail
                         </a>
                     </div>
@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-md-3 d-flex gap-12">
                                 <button type="submit" class="btn btn-main rounded-pill">Terapkan Filter</button>
-                                <a href="{{ route('admin.reports.index') }}" class="btn btn-outline-secondary rounded-pill">Reset</a>
+                                <a href="{{ route('admin.reports.index') }}" class="btn btn-outline-gray rounded-pill">Reset</a>
                             </div>
                         </form>
                     </div>
@@ -98,7 +98,7 @@
                                                     <td class="text-end">{{ number_format((float) $row->lulus_rate, 2) }}%</td>
                                                 </tr>
                                             @empty
-                                                <tr>
+                                                <tr data-empty="1">
                                                     <td colspan="5" class="text-center text-gray-400 py-24">Tidak ada data untuk filter ini.</td>
                                                 </tr>
                                             @endforelse
@@ -132,7 +132,7 @@
                                                     <td class="text-end">{{ number_format((float) $row->lulus_rate, 2) }}%</td>
                                                 </tr>
                                             @empty
-                                                <tr>
+                                                <tr data-empty="1">
                                                     <td colspan="4" class="text-center text-gray-400 py-24">Tidak ada data per user.</td>
                                                 </tr>
                                             @endforelse
@@ -183,7 +183,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr>
+                                        <tr data-empty="1">
                                             <td colspan="8" class="text-center text-gray-400 py-24">Detail attempt tidak ditemukan.</td>
                                         </tr>
                                     @endforelse
@@ -203,26 +203,21 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 if (window.jQuery && $.fn.DataTable) {
-                    $('#report-per-bab').DataTable({
-                        paging: false,
-                        info: false,
-                        searching: false,
-                        order: [[0, 'asc']]
-                    });
-
-                    $('#report-per-user').DataTable({
-                        paging: false,
-                        info: false,
-                        searching: false,
-                        order: [[1, 'desc']]
-                    });
-
-                    $('#report-detail').DataTable({
-                        paging: false,
-                        info: false,
-                        searching: false,
-                        order: [[1, 'desc']]
-                    });
+                    function initIfNotEmpty(sel, order){
+                        const $t = $(sel);
+                        const rows = $t.find('tbody tr');
+                        const nonEmpty = rows.filter(function(){ return !this.hasAttribute('data-empty'); });
+                        if(nonEmpty.length === 0){ return; }
+                        $t.DataTable({
+                            paging: false,
+                            info: false,
+                            searching: false,
+                            order: order
+                        });
+                    }
+                    initIfNotEmpty('#report-per-bab', [[0,'asc']]);
+                    initIfNotEmpty('#report-per-user', [[1,'desc']]);
+                    initIfNotEmpty('#report-detail', [[1,'desc']]);
                 }
             });
         </script>

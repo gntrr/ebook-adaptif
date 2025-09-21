@@ -10,6 +10,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
 
 class MateriController extends Controller
@@ -111,6 +113,7 @@ class MateriController extends Controller
             'konten'           => ['nullable','string'],
             'konten_type'      => ['required', Rule::in(['html','image'])],
             'konten_image_path'=> ['nullable','string','max:255'],
+            'konten_image_file'=> ['nullable','image','max:2048'], // 2MB
         ]);
 
         $validator->sometimes('konten', ['required','string'], fn ($input) => $input->konten_type === 'html');
@@ -122,6 +125,11 @@ class MateriController extends Controller
 
         if ($data['konten_type'] === 'image') {
             $data['konten'] = null;
+            // Upload file jika ada
+            if ($request->hasFile('konten_image_file')) {
+                $stored = $request->file('konten_image_file')->store('materi-images', 'public');
+                $data['konten_image_path'] = 'storage/' . $stored; // web-accessible via storage:link
+            }
         } else {
             $data['konten_image_path'] = $data['konten_image_path'] ?: null;
         }
@@ -155,6 +163,14 @@ class MateriController extends Controller
         return in_array($t, ['A','B'], true) ? $t : null;
     }
 }
+
+
+
+
+
+
+
+
 
 
 

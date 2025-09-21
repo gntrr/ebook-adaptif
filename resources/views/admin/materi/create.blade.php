@@ -15,7 +15,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.materi.store') }}">
+                        <form method="POST" action="{{ route('admin.materi.store') }}" enctype="multipart/form-data">
                             @csrf
                             @include('admin.materi._form')
                         </form>
@@ -25,3 +25,5 @@
         </div>
     </div>
 </x-app-layout>
+
+

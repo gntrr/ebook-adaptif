@@ -9,7 +9,7 @@
                         <h1 class="h3 mb-4">Edit User</h1>
                         <p class="text-gray-400 mb-0">Perbarui profil dan status admin untuk {{ $user->name }}.</p>
                     </div>
-                    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary rounded-pill">Kembali</a>
+                    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-gray rounded-pill">Kembali</a>
                 </div>
 
                 @include('admin.partials.flash')

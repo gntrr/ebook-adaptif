@@ -127,7 +127,7 @@
                                                     <td class="text-end">{{ number_format((float) $rekap->lulus_rate, 2) }}%</td>
                                                 </tr>
                                             @empty
-                                                <tr>
+                                                <tr data-empty="1">
                                                     <td colspan="5" class="text-center text-gray-400 py-24">Belum ada data evaluasi pada periode ini.</td>
                                                 </tr>
                                             @endforelse
@@ -159,7 +159,7 @@
                                                     <td class="text-end">{{ number_format((float) $user->avg_skor, 2) }}</td>
                                                 </tr>
                                             @empty
-                                                <tr>
+                                                <tr data-empty="1">
                                                     <td colspan="3" class="text-center text-gray-400 py-24">Belum ada user memenuhi kriteria.</td>
                                                 </tr>
                                             @endforelse
@@ -195,7 +195,7 @@
                                                     <td class="text-end">{{ number_format((float) $user->fail_rate, 2) }}%</td>
                                                 </tr>
                                             @empty
-                                                <tr>
+                                                <tr data-empty="1">
                                                     <td colspan="4" class="text-center text-gray-400 py-24">Belum ada user membutuhkan remedial pada periode ini.</td>
                                                 </tr>
                                             @endforelse
@@ -228,7 +228,7 @@
                                                     <td class="text-end">{{ number_format((int) $row->users) }}</td>
                                                 </tr>
                                             @empty
-                                                <tr>
+                                                <tr data-empty="1">
                                                     <td colspan="4" class="text-center text-gray-400 py-24">Belum ada data posisi belajar.</td>
                                                 </tr>
                                             @endforelse
@@ -278,10 +278,10 @@
                                                 @endif
                                             </td>
                                         </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center text-gray-400 py-24">Belum ada aktivitas evaluasi.</td>
-                                        </tr>
+                                        @empty
+                                            <tr data-empty="1">
+                                                <td colspan="6" class="text-center text-gray-400 py-24">Belum ada aktivitas evaluasi.</td>
+                                            </tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -303,11 +303,18 @@
                 };
 
                 if (window.jQuery && $.fn.DataTable) {
-                    $('#rekap-bab-table').DataTable(simpleTable);
-                    $('#top-performers-table').DataTable(simpleTable);
-                    $('#needs-remedial-table').DataTable(simpleTable);
-                    $('#posisi-table').DataTable(simpleTable);
-                    $('#recent-activity-table').DataTable({
+                    function initIfNotEmpty(selector, options){
+                        const $t = $(selector);
+                        if(!$t.length) return;
+                        const nonEmpty = $t.find('tbody tr').filter(function(){ return !this.hasAttribute('data-empty'); });
+                        if(nonEmpty.length === 0) return; // skip jika hanya placeholder
+                        $t.DataTable(options);
+                    }
+                    initIfNotEmpty('#rekap-bab-table', simpleTable);
+                    initIfNotEmpty('#top-performers-table', simpleTable);
+                    initIfNotEmpty('#needs-remedial-table', simpleTable);
+                    initIfNotEmpty('#posisi-table', simpleTable);
+                    initIfNotEmpty('#recent-activity-table', {
                         paging: false,
                         searching: false,
                         info: false,

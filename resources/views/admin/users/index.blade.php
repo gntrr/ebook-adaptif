@@ -30,7 +30,7 @@
                             </div>
                             <div class="col-md-3">
                                 <button type="submit" class="btn btn-main rounded-pill">Terapkan Filter</button>
-                                <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary rounded-pill ms-2">Reset</a>
+                                <a href="{{ route('admin.users.index') }}" class="btn btn-outline-gray rounded-pill ms-2">Reset</a>
                             </div>
                         </form>
                     </div>
@@ -86,12 +86,12 @@
                                             <td>{{ $user->updated_at?->format('d M Y H:i') ?? '-' }}</td>
                                             <td class="text-center">
                                                 <div class="d-flex justify-content-center gap-8">
-                                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-outline-primary rounded-pill">Edit</a>
+                                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-outline-main rounded-pill">Edit</a>
                                                     @if ($user->id !== $authId)
                                                         <form action="{{ route('admin.users.toggle-admin', $user) }}" method="POST">
                                                             @csrf
                                                             @method('PATCH')
-                                                            <button type="submit" class="btn btn-sm btn-outline-secondary rounded-pill">
+                                                            <button type="submit" class="btn btn-sm btn-outline-gray rounded-pill">
                                                                 {{ $user->is_admin ? 'Cabut Admin' : 'Jadikan Admin' }}
                                                             </button>
                                                         </form>
@@ -122,18 +122,6 @@
         </div>
     </div>
 
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                if (window.jQuery && $.fn.DataTable) {
-                    $('#users-table').DataTable({
-                        paging: false,
-                        info: false,
-                        searching: false,
-                        order: [[2, 'desc'], [0, 'asc']]
-                    });
-                }
-            });
-        </script>
-    @endpush
+    
 </x-app-layout>
+

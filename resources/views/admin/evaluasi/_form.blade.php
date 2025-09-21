@@ -1,10 +1,18 @@
-@php($config = $config ?? ['palette' => [], 'solution' => [], 'labels' => []])
-@php($paletteText = old('palette', implode(\"\n\", $config['palette'] ?? [])))
-@php($solutionText = old('solution', implode(\"\n\", $config['solution'] ?? [])))
-@php($labelsText = old('labels'))
-@if (is_null($labelsText) && ! empty($config['labels'] ?? []))
-    @php($labelsText = collect($config['labels'])->map(fn ($label, $key) => $key.' = '.$label)->implode("\n"))
-@endif
+@php
+    $config = $config ?? ['palette' => [], 'solution' => [], 'labels' => [], 'hint' => null];
+    $paletteText = old('palette');
+    if ($paletteText === null) {
+        $paletteText = implode("\n", $config['palette'] ?? []);
+    }
+    $solutionText = old('solution');
+    if ($solutionText === null) {
+        $solutionText = implode("\n", $config['solution'] ?? []);
+    }
+    $labelsText = old('labels');
+    if ($labelsText === null && !empty($config['labels'])) {
+        $labelsText = collect($config['labels'])->map(fn($label,$key) => $key.' = '.$label)->implode("\n");
+    }
+@endphp
 
 <div class="row g-4">
     <div class="col-md-6">
@@ -13,7 +21,7 @@
             <option value="">Pilih Materi</option>
             @foreach ($materiOptions as $option)
                 <option value="{{ $option->id }}" @selected(old('materi_id', $evaluation->materi_id ?? null) == $option->id)>
-                    Bab {{ $option->bab }} • Step {{ $option->step }} • {{ $option->judul }}
+                    Bab {{ $option->bab }} ï¿½ Step {{ $option->step }} ï¿½ {{ $option->judul }}
                 </option>
             @endforeach
         </select>
@@ -50,6 +58,6 @@
 </div>
 
 <div class="d-flex justify-content-between align-items-center mt-24">
-    <a href="{{ route('admin.evaluasi.index') }}" class="btn btn-outline-secondary rounded-pill">Batal</a>
+    <a href="{{ route('admin.evaluasi.index') }}" class="btn btn-outline-gray rounded-pill">Batal</a>
     <button type="submit" class="btn btn-main rounded-pill">Simpan</button>
 </div>
