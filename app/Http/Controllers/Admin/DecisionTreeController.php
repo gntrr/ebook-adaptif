@@ -19,11 +19,11 @@ class DecisionTreeController extends Controller
         $groups = Materi::query()
             ->ordered()
             ->get()
-            ->groupBy(fn ($item) => $item->bab . '|' . ($item->track ?? 'default'));
+            ->groupBy(fn ($item) => $item->bab.'|'.($item->track ?? 'default'));
 
         $trees = $groups->map(function ($items) {
             $first = $items->first();
-            $trackLabel = $first->track ?? 'Default';
+            $trackLabel = $first->track ?? 'Jalur utama';
 
             return [
                 'bab'     => $first->bab,
@@ -31,9 +31,9 @@ class DecisionTreeController extends Controller
                 'summary' => sprintf(
                     'Urutan slot yang tersedia pada bab %d%s.',
                     $first->bab,
-                    $trackLabel === 'Default' ? '' : " (Track {$trackLabel})"
+                    $trackLabel === 'Jalur utama' ? '' : " (Track {$trackLabel})"
                 ),
-                'notes'   => 'Pohon ini dibentuk secara otomatis dari data materi. Update materi di CMS untuk mengubah cabang yang tampil.',
+                'notes'   => 'Pohon ini dibentuk otomatis dari data materi. Update materi di CMS untuk mengubah cabang.',
                 'nodes'   => $items->map(function (Materi $materi) {
                     $tipeLabel = ucwords(str_replace('_', ' ', $materi->tipe));
 

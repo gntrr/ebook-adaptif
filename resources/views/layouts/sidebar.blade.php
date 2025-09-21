@@ -68,12 +68,6 @@
                             <span class="text">Laporan &amp; Ekspor</span>
                         </a>
                     </li>
-                    <li class="sidebar-menu__item">
-                        <a href="{{ route('admin.uat.index') }}" class="sidebar-menu__link">
-                            <span class="icon"><i class="ph ph-clipboard"></i></span>
-                            <span class="text">UAT</span>
-                        </a>
-                    </li>
                 @endif
 
                 <li class="sidebar-menu__item">

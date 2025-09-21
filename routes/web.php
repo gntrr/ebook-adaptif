@@ -43,7 +43,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'ensure.admin'])->gr
     Route::resource('evaluasi', AdminEvaluasiController::class)->except(['show']);
     Route::get('decision-tree', [AdminDecisionTreeController::class, 'index'])->name('decision-tree.index');
     Route::view('rules', 'admin.rules.index')->name('rules.index');
-    Route::view('uat', 'admin.uat.index')->name('uat.index');
 });
 
 Route::middleware('auth')->group(function () {

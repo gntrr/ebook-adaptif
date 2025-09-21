@@ -8,7 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Evaluasi;
 use App\Models\Materi;
 use Illuminate\Http\Request;
-use Illuminate\\Support\\Str;\nuse Illuminate\\Validation\\ValidationException;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class EvaluasiController extends Controller
 {
