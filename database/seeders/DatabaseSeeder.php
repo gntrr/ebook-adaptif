@@ -21,6 +21,10 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // Panggil seeder lain
-        $this->call(AdminUserSeeder::class);
+        $this->call([
+            AdminUserSeeder::class,
+            MateriSeeder::class,
+            EvaluasiSeeder::class,
+        ]);
     }
 }

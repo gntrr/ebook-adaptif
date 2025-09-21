@@ -9,6 +9,7 @@ use App\Models\Materi;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class MateriController extends Controller
@@ -101,24 +102,30 @@ class MateriController extends Controller
         $trackRule = Rule::in(['A','B',null]);
         $tipeRule  = Rule::in(['materi','praktek','evaluasi','evaluasi_bab']);
 
-        $rules = [
-            'bab'   => ['required','integer','min:1','max:99'],
-            'track' => ['nullable', $trackRule],
-            'step'  => ['required','integer','min:1','max:5'],
-            'tipe'  => ['required', $tipeRule],
-            'judul' => ['required','string','max:120'],
-            'konten'=> ['nullable','string'],
+        $validator = Validator::make($request->all(), [
+            'bab'              => ['required','integer','min:1','max:99'],
+            'track'            => ['nullable', $trackRule],
+            'step'             => ['required','integer','min:1','max:5'],
+            'tipe'             => ['required', $tipeRule],
+            'judul'            => ['required','string','max:120'],
+            'konten'           => ['nullable','string'],
+            'konten_type'      => ['required', Rule::in(['html','image'])],
+            'konten_image_path'=> ['nullable','string','max:255'],
+        ]);
 
-            // Enforce uniqueness at app level too (selain di DB)
-            // unique on (bab, track, step, tipe)
-        ];
+        $validator->sometimes('konten', ['required','string'], fn ($input) => $input->konten_type === 'html');
+        $validator->sometimes('konten_image_path', ['required','string','max:255'], fn ($input) => $input->konten_type === 'image');
 
-        $data = $request->validate($rules);
+        $data = $validator->validate();
 
-        // normalisasi track
         $data['track'] = $this->normTrack($data['track'] ?? null);
 
-        // Cek unik manual (agar error message lebih manusiawi)
+        if ($data['konten_type'] === 'image') {
+            $data['konten'] = null;
+        } else {
+            $data['konten_image_path'] = $data['konten_image_path'] ?: null;
+        }
+
         $exists = Materi::query()
             ->when($ignoreId, fn($q) => $q->where('id','!=',$ignoreId))
             ->where('bab', $data['bab'])
@@ -128,16 +135,13 @@ class MateriController extends Controller
             ->exists();
 
         if ($exists) {
-            // lempar balik sebagai validation error
             $request->validate(['tipe' => 'prohibited'], [
                 'tipe.prohibited' => 'Slot kombinasi bab/track/step/tipe sudah ada.',
             ]);
         }
 
         return $data;
-    }
-
-    /** Deteksi unique key violation dari DB (PostgreSQL). */
+    }    /** Deteksi unique key violation dari DB (PostgreSQL). */
     private function isUniqueViolation(QueryException $e): bool
     {
         // Postgres unique_violation SQLSTATE 23505
@@ -151,3 +155,6 @@ class MateriController extends Controller
         return in_array($t, ['A','B'], true) ? $t : null;
     }
 }
+
+
+

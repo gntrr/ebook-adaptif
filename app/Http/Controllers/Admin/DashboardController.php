@@ -63,17 +63,17 @@ class DashboardController extends Controller
         // ---------- 2) Rekap per bab ----------
         $rekapPerBab = HasilEvaluasi::query()
             ->select([
-                'materis.bab',
+                'materi.bab',
                 DB::raw('COUNT(*)::int AS attempts'),
                 DB::raw('ROUND(AVG(hasil_evaluasi.skor), 2) AS avg_skor'),
                 DB::raw('SUM(CASE WHEN hasil_evaluasi.lulus THEN 1 ELSE 0 END)::int AS lulus_count'),
                 DB::raw('ROUND( (SUM(CASE WHEN hasil_evaluasi.lulus THEN 1 ELSE 0 END)::numeric / NULLIF(COUNT(*),0)) * 100, 2) AS lulus_rate'),
             ])
             ->join('evaluasi', 'evaluasi.id', '=', 'hasil_evaluasi.evaluasi_id')
-            ->join('materis', 'materis.id', '=', 'evaluasi.materi_id')
+            ->join('materi', 'materi.id', '=', 'evaluasi.materi_id')
             ->whereBetween('hasil_evaluasi.created_at', [$start, $end])
-            ->groupBy('materis.bab')
-            ->orderBy('materis.bab')
+            ->groupBy('materi.bab')
+            ->orderBy('materi.bab')
             ->get();
 
         // ---------- 3) Top performer (rata2 skor tertinggi) ----------
@@ -171,16 +171,16 @@ class DashboardController extends Controller
 
         $rekapPerBab = HasilEvaluasi::query()
             ->select([
-                'materis.bab',
+                'materi.bab',
                 DB::raw('COUNT(*)::int AS attempts'),
-                DB::raw('ROUND(AVG(hasil_evaluasis.skor), 2) AS avg_skor'),
-                DB::raw('SUM(CASE WHEN hasil_evaluasis.lulus THEN 1 ELSE 0 END)::int AS lulus_count'),
+                DB::raw('ROUND(AVG(hasil_evaluasi.skor), 2) AS avg_skor'),
+                DB::raw('SUM(CASE WHEN hasil_evaluasi.lulus THEN 1 ELSE 0 END)::int AS lulus_count'),
             ])
-            ->join('evaluasis', 'evaluasis.id', '=', 'hasil_evaluasis.evaluasi_id')
-            ->join('materis', 'materis.id', '=', 'evaluasis.materi_id')
-            ->whereBetween('hasil_evaluasis.created_at', [$start, $end])
-            ->groupBy('materis.bab')
-            ->orderBy('materis.bab')
+            ->join('evaluasi', 'evaluasi.id', '=', 'hasil_evaluasi.evaluasi_id')
+            ->join('materi', 'materi.id', '=', 'evaluasi.materi_id')
+            ->whereBetween('hasil_evaluasi.created_at', [$start, $end])
+            ->groupBy('materi.bab')
+            ->orderBy('materi.bab')
             ->get();
 
         return response()->json([

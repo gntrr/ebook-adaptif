@@ -11,7 +11,7 @@ class Materi extends Model
 
     protected $table = 'materi';
     protected $fillable = [
-        'bab','track','step','tipe','judul','konten',
+        'bab','track','step','tipe','judul','konten','konten_type','konten_image_path',
         // kalau kamu pakai level seperti di draf:
         // 'level',
     ];

@@ -37,19 +37,19 @@
                         </a>
                     </li>
                     <li class="sidebar-menu__item">
-                        <a href="{{ url('/admin/evaluasi') }}" class="sidebar-menu__link">
+                        <a href="{{ route('admin.evaluasi.index') }}" class="sidebar-menu__link">
                             <span class="icon"><i class="ph ph-list-checks"></i></span>
                             <span class="text">Bank Soal &amp; Evaluasi</span>
                         </a>
                     </li>
                     <li class="sidebar-menu__item">
-                        <a href="{{ url('/admin/rules') }}" class="sidebar-menu__link">
+                        <a href="{{ route('admin.rules.index') }}" class="sidebar-menu__link">
                             <span class="icon"><i class="ph ph-sliders"></i></span>
                             <span class="text">Aturan Adaptif</span>
                         </a>
                     </li>
                     <li class="sidebar-menu__item">
-                        <a href="{{ url('/admin/decision-tree') }}" class="sidebar-menu__link">
+                        <a href="{{ route('admin.decision-tree.index') }}" class="sidebar-menu__link">
                             <span class="icon"><i class="ph ph-flow-arrow"></i></span>
                             <span class="text">Decision Tree</span>
                         </a>
@@ -67,7 +67,7 @@
                         </a>
                     </li>
                     <li class="sidebar-menu__item">
-                        <a href="{{ url('/admin/uat') }}" class="sidebar-menu__link">
+                        <a href="{{ route('admin.uat.index') }}" class="sidebar-menu__link">
                             <span class="icon"><i class="ph ph-clipboard"></i></span>
                             <span class="text">UAT</span>
                         </a>
