@@ -12,13 +12,18 @@ use App\Http\Controllers\Admin\DecisionTreeController as AdminDecisionTreeContro
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\StudentDashboardController;
+
 Route::get('/', function () {
     if (Auth::check() && Auth::user()->is_admin) {
         return redirect()->route('admin.dashboard');
     }
+    return redirect()->route('dashboard');
+});
 
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', StudentDashboardController::class)
+    ->middleware(['auth','verified'])
+    ->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/materi/{bab}/{track?}/{step}', [MateriController::class, 'show'])->name('materi.show');
