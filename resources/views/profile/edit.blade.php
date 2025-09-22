@@ -46,7 +46,7 @@
                     <div class="col-xxl-4">
                         <div class="card h-100">
                             <div class="card-body">
-                                <h5 class="mb-16">Ubah Kata Sandi</h5>
+                                <h5 class="mb-8">Ubah Kata Sandi</h5>
                                 @include('profile.partials.update-password-form')
                             </div>
                         </div>
@@ -55,14 +55,14 @@
                     <div class="col-xxl-4">
                         <div class="card h-100">
                             <div class="card-body">
-                                <h5 class="mb-16">Hapus Akun</h5>
+                                <h5 class="mb-8">Hapus Akun</h5>
                                 @include('profile.partials.delete-user-form')
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row gy-4 mt-2">
+                {{-- <div class="row gy-4 mt-2">
                     <div class="col-xl-6">
                         <div class="card h-100">
                             <div class="card-body">
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
