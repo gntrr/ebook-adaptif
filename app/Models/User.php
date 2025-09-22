@@ -26,6 +26,8 @@ class User extends Authenticatable
         'current_track',
         'current_step',
         'progress',
+        'goal_track',
+        'learning_goal',
     ];
 
     /**
